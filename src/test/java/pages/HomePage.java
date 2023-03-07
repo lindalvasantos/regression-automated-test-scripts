@@ -4,17 +4,32 @@ package pages;
 import java.util.Map;
 import org.openqa.selenium.support.CacheLookup;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import utils.TimeOutForExecution;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class HomePage {
     private Map<String, String> data;
     private WebDriver driver;
-    private int timeout = 15;
-
+    private int timeout = TimeOutForExecution.TIME_OUT; ;
+    
+    private final String pageUrl = "http://advantageonlineshopping.com/#/";    
+    private final String pageLoadedText = "";
+    
+    
+    
+    /*
+     * ***************************************************************************************** 
+     * LOCATORS: This is done through the use of @FindBy annotations
+     * @see: Page Objects in Selenium tests
+     * ***************************************************************************************** 
+     */  
     @FindBy(css = "#mobile-section ul li:nth-of-type(2) a.img")
     @CacheLookup
     private WebElement _10;
@@ -99,10 +114,6 @@ public class HomePage {
     @CacheLookup
     private WebElement ourProducts;
 
-    private final String pageLoadedText = "HP ROAR PLUS WIRELESS SPEAKER";
-
-    private final String pageUrl = "/#/";
-
     @FindBy(name = "password")
     @CacheLookup
     private WebElement password;
@@ -166,6 +177,17 @@ public class HomePage {
     @FindBy(css = "a[href='#/product/21']")
     @CacheLookup
     private WebElement viewDetails3;
+    
+    
+    
+    /*
+     * ***************************************************************************************** 
+     * CONSTRUCTORS: 
+     * Page Factory will initialize every WebElement variable 
+     * In this case we will use Page Factory in the constructor to initialize the Object
+     * @see: Page Factory + Constructor
+     * ***************************************************************************************** 
+     */    
 
     public HomePage() {
     }
@@ -173,6 +195,8 @@ public class HomePage {
     public HomePage(WebDriver driver) {
         this();
         this.driver = driver;
+        // Lindalva: manually included this to Initialize Elements
+     	PageFactory.initElements(driver, this); 
     }
 
     public HomePage(WebDriver driver, Map<String, String> data) {
@@ -185,6 +209,21 @@ public class HomePage {
         this.timeout = timeout;
     }
 
+    
+    /*
+     * ***************************************************************************************** 
+     * METHODS: 
+     * Test methods
+     * ***************************************************************************************** 
+     */  
+    
+    //Lindalva: open home page
+	public HomePage openHomePage() {
+		driver.get(pageUrl);
+		return this;
+	}
+    
+    
     /**
      * Click on 0 Link.
      *
